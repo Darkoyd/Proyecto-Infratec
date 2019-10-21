@@ -45,7 +45,7 @@ int cargarInfo(Informacion*, char*);
  **/
 void calcularCRC(Informacion * datos, int lonDiv, unsigned char divisor) {
 
-    // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÃA Y LA DOCUMENTACIÃ“N.
+    // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÃA Y LA DOCUMENTACIÓN.
     
 }
 
@@ -64,7 +64,7 @@ unsigned char calcularByte(unsigned char * entrada) {
 
 /**
  * Carga la información ingresada del archivo dentro de la estructura para manejarla en un mismo lugar
- * ESTA FUNCIÃ“N NO SE DEBE MODIFICAR
+ * ESTA FUNCIÓN NO SE DEBE MODIFICAR
  * PARÃMETROS:
  * "datos" El apuntador a la estructura que almacena todo lo necesario para calcular el CRC
  * "rutaArchivo" El apuntador a la cadena de texto con el nombre/ruta del archivo a leer
@@ -107,7 +107,7 @@ int cargarInfo(Informacion * datos, char * rutaArchivo) {
 
 /**
  * Función principal de la aplicación
- * ESTA FUNCIÃ“N NO SE DEBE MODIFICAR
+ * ESTA FUNCIÓN NO SE DEBE MODIFICAR
  * PARÃMETROS:
  * "argc" El número de argumentos de comando ingresado. Siempre es 1 o más.
  * "argv" El apuntador a las cadenas de texto con las diferentes entradas del usuario. La primera posición (0) siempre es la ruta del ejecutable.
