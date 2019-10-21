@@ -4,7 +4,7 @@
 // DESARROLLADO POR:
 // Maria Gabriela Torres - Código - Correo
 // Camila Parra - Código - Correo
-// Nicolás Londoño  - Código - Correo
+// Nicolás Londoño  - 201821364 - n.londonoc
 
 #define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
