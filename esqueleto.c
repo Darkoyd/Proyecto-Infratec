@@ -2,8 +2,8 @@
 // EL PROYECTO DEBE SER DESARROLLADO EN GRUPOS DE 3 PERSONAS
 //
 // DESARROLLADO POR:
-// Maria Gabriela Torres - Código - Correo
-// Camila Parra - Código - Correo
+// Maria Gabriela Torres - 201820251 - mg.torres
+// Camila Parra - 201819464 - mc.parrad
 // Nicolás Londoño  - 201821364 - n.londonoc
 
 #define _CRT_SECURE_NO_DEPRECATE
@@ -46,35 +46,13 @@ int cargarInfo(Informacion *, char *);
  **/
 void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 {
-    unsigned char byte[8];
-    char k, char n;
-    for (char c = divisor; c >= 0; c--)
-    {
-        k = n >> c;
-
-        if (k & 1)
-            printf("1");
-        else
-            printf("0");
-    }
-
-#include <stdio.h>  
-#include <string.h>  
-
-int main()  
-{  
-    long decimal, tempDecimal;  
-    char binary[65];  
-    int index = 0;  
-
-    /* 
-     * Reads decimal number from user 
-     */  
-    printf("Enter any decimal value : ");  
-    scanf("%ld", &decimal);  
+ 
+    unsigned char tempDecimal;  
+    unsigned char binary[8];  
+    char index = 0;   
 
     /* Copies decimal value to temp variable */  
-    tempDecimal = decimal;  
+    tempDecimal = divisor;  
 
     while(tempDecimal!=0)  
     {  
@@ -89,13 +67,6 @@ int main()
     /* Reverse the binary value found */  
     strrev(binary);  
 
-    printf("\nDecimal value = %ld\n", decimal);  
-    printf("Binary value of decimal = %s", binary);  
-
-    return 0;  
-}
-
-
 
     unsigned char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
 
@@ -107,7 +78,7 @@ int main()
         {
             for (char j = 0; j < 8; j++)
             {
-                unsigned char x = datos->contenido[i + j] ^ divisor;
+                unsigned char x = datos->contenido[i + j] ^ binary[j];
                 if (x == 1)
                 {
                     datos->contenido[i + j] = '1';
