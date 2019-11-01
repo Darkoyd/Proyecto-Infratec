@@ -46,11 +46,40 @@ int cargarInfo(Informacion *, char *);
  **/
 void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 {
+    unsigned char byte[8];
+    char k, char n;
+    for (char c = divisor; c >= 0; c--)
+    {
+        k = n >> c;
 
-    char bits[8]={'0','0','0','0','0','0','0','0'}; 
-    datos.append(bits);
+        if (k & 1)
+            printf("1");
+        else
+            printf("0");
+    }
 
-    datos.preppend(divisor);
+    unsigned char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
+
+    strcat(datos->contenido, bits);
+
+    for (int i = 0; i < datos->longitudContenido; i++)
+    {
+        if (datos->contenido[i] == '1')
+        {
+            for (char j = 0; j < 8; j++)
+            {
+                unsigned char x = datos->contenido[i + j] ^ divisor;
+                if (x == 1)
+                {
+                    datos->contenido[i + j] = '1';
+                }
+                else
+                {
+                    datos->contenido[i + j] = '0';
+                }
+            }
+        }
+    }
 
     // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÃA Y LA DOCUMENTACIÓN.
 }
@@ -66,9 +95,10 @@ unsigned char calcularByte(unsigned char *entrada)
 {
     int tam = strlen(entrada);
 
-    char bits[8] = {'0','0','0','0','0','0','0','0'};
+    char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
 
-    for (char i = 0; i < tam; i++) {
+    for (char i = 0; i < tam; i++)
+    {
         if (entrada[i] == '1')
             bits[i] = '1';
     }
