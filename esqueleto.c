@@ -17,18 +17,19 @@
 // ====================================================
 
 // Definición de la estructura en donde se almacenará la información a calcular el CRC
-typedef struct informacion {
-    int longitudContenido; // Longitud de la información leída del archivo
-    unsigned char * contenido; // Apuntador al contenido de la información leída del archivo, sobre la cual se calculará el CRC
+typedef struct informacion
+{
+    int longitudContenido;    // Longitud de la información leída del archivo
+    unsigned char *contenido; // Apuntador al contenido de la información leída del archivo, sobre la cual se calculará el CRC
 } Informacion;
 
 // ====================================================
 // PROTOTIPOS/DEFINICIONES DE FUNCIONES
 // ====================================================
 
-void calcularCRC(Informacion*, int, unsigned char);
-unsigned char calcularByte(unsigned char*);
-int cargarInfo(Informacion*, char*);
+void calcularCRC(Informacion *, int, unsigned char);
+unsigned char calcularByte(unsigned char *);
+int cargarInfo(Informacion *, char *);
 
 // ====================================================
 // FUNCIONES
@@ -43,10 +44,10 @@ int cargarInfo(Informacion*, char*);
  * "lonDiv" El número de bits del divisor de entrada ingresado al programa
  * "divisor" El divisor a utilizar ya en su forma de caracter correspondiente a la entrada de unos y ceros
  **/
-void calcularCRC(Informacion * datos, int lonDiv, unsigned char divisor) {
+void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
+{
 
     // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÃA Y LA DOCUMENTACIÓN.
-    
 }
 
 /**
@@ -56,10 +57,27 @@ void calcularCRC(Informacion * datos, int lonDiv, unsigned char divisor) {
  * RETORNO: 
  * El char con el contenido respectivo de los bits de la entrada de ceros y unos del usuario
  **/
-unsigned char calcularByte(unsigned char * entrada) {
-    
-    // TODO: Esta función se debe realizar completamente
-    
+unsigned char calcularByte(unsigned char *entrada)
+{
+    int tam = strlen(entrada);
+
+    char bits[8] = {'0','0','0','0','0','0','0','0'};
+
+    for (char i = 0; i < tam; i++) {
+        if (entrada[i] == '1')
+            bits[i] = '1';
+    }
+
+    unsigned char byte = 0;
+
+    for (int i = 0; i < 8; i++)
+    {
+        unsigned char potencia = pow(2, (7 - i));
+        unsigned char bit = (bits[i] - '0') * potencia;
+        byte = byte + bit;
+    }
+
+    return byte;
 }
 
 /**
@@ -71,32 +89,33 @@ unsigned char calcularByte(unsigned char * entrada) {
  * RETORNO: 
  * La longitud en bytes de la información leída del archivo que se carga en la estructura
  **/
-int cargarInfo(Informacion * datos, char * rutaArchivo) {
-    
+int cargarInfo(Informacion *datos, char *rutaArchivo)
+{
+
     // Declaración de todas las variables necesarias
     FILE *file;
-	int n;
+    int n;
 
     // Lectura del archivo
-	file = fopen(rutaArchivo, "rb");
-	if (!file) 
-	{
-		printf("\nNo se pudo abrir el archivo para leer: %s\n\n", rutaArchivo);
-		system("pause");
-		exit(EXIT_FAILURE);
-	}
+    file = fopen(rutaArchivo, "rb");
+    if (!file)
+    {
+        printf("\nNo se pudo abrir el archivo para leer: %s\n\n", rutaArchivo);
+        system("pause");
+        exit(EXIT_FAILURE);
+    }
     //Verificación de la longitud en bytes del contenido
-	fseek(file, 0, SEEK_END);
-	n = ftell(file);
-	fseek(file, 0, SEEK_SET);
-	
+    fseek(file, 0, SEEK_END);
+    n = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
     // Se reserva el espacio necesario para el contenido donde se calculará el CRC
     // incluyendo el byte extra donde este quedará.
-    datos->contenido = (unsigned char *)calloc(n+1, sizeof(unsigned char));
-	fread((datos->contenido), sizeof(unsigned char), n, file);
+    datos->contenido = (unsigned char *)calloc(n + 1, sizeof(unsigned char));
+    fread((datos->contenido), sizeof(unsigned char), n, file);
     datos->contenido[n] = 0;
 
-	fclose(file);
+    fclose(file);
 
     return n;
 }
@@ -114,17 +133,19 @@ int cargarInfo(Informacion * datos, char * rutaArchivo) {
  * RETORNO: 
  * Entero que indica si la ejecución se completo correctamente o con alguna anomalía
  **/
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
     // Declaración de todas las variables necesari<as antes que cualquier llamado a procedimientos
     int lonDiv, i;
     unsigned char divisor;
-    Informacion * info;
+    Informacion *info;
 
     // Mensaje inicial
     printf("\nPROYECTO 1 INFRATEC - 201920\n\n");
-    
+
     // Se verifica que se ingrese un número correcto de argumentos para el programa
-    if (argc != 3) {
+    if (argc != 3)
+    {
         printf("Se ingreso un numero incorrecto de argumentos (%d) o se ingresaron incorrectamente :(\n", argc);
         system("pause");
         return EXIT_FAILURE;
@@ -133,7 +154,8 @@ int main(int argc, char* argv[]) {
 
     // Se verifica que el divisor tenga la longitud adecuada
     lonDiv = strlen(argv[2]);
-    if(lonDiv < 3 || lonDiv > 8) {
+    if (lonDiv < 3 || lonDiv > 8)
+    {
         printf("La longitud del divisor para realizar el calculo es incorrecta (%d) :(\n", lonDiv);
         system("pause");
         return EXIT_FAILURE;
@@ -141,7 +163,7 @@ int main(int argc, char* argv[]) {
     printf("El divisor tiene una longitud adecuada (%d) ! :D\n", lonDiv);
 
     // Reserva memoria para la estructura que almacenará la información y para el contenido
-    info = (Informacion *) malloc(sizeof(Informacion));
+    info = (Informacion *)malloc(sizeof(Informacion));
 
     // Se carga la información dentro de la estructura según la entrada
     info->longitudContenido = cargarInfo(info, argv[1]);
@@ -150,7 +172,8 @@ int main(int argc, char* argv[]) {
     // Se calcula el CRC y se muestra en consola
     calcularCRC(info, lonDiv, divisor);
     printf("El CRC calculado en hexa es:\n\n");
-    for (i = 0; i <= info->longitudContenido; i++) {
+    for (i = 0; i <= info->longitudContenido; i++)
+    {
         printf("%02x", info->contenido[i]);
     }
     printf("\n\n");
