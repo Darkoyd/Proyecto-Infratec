@@ -46,7 +46,21 @@ int cargarInfo(Informacion*, char*);
 void calcularCRC(Informacion * datos, int lonDiv, unsigned char divisor) {
 
     // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÍA Y LA DOCUMENTACIÓN.
-    
+    char bits[8]={'0','0','0','0','0','0','0','0'}; 
+    datos.append(bits);
+
+    datos.preppend(divisor);
+    divisor.toArary();
+
+    if(divisor.get(0) ==1)
+    {
+        
+
+
+    }
+
+    //Calcular el CRC, y guardarlo en el último byte de la estructura de infromación(En la dirección apuntada por el parámetro)
+
 }
 
 /**
@@ -58,6 +72,7 @@ void calcularCRC(Informacion * datos, int lonDiv, unsigned char divisor) {
  **/
 unsigned char calcularByte(unsigned char * entrada) {
     
+
     // TODO: Esta función se debe realizar completamente
     
 }
@@ -121,6 +136,7 @@ int main(int argc, char* argv[]) {
     Informacion * info;
 
     // Mensaje inicial
+    //TODO poner nombres
     printf("\nPROYECTO 1 INFRATEC - 201920\n\n");
     
     // Se verifica que se ingrese un número correcto de argumentos para el programa
