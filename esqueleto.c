@@ -47,6 +47,11 @@ int cargarInfo(Informacion *, char *);
 void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 {
 
+    char bits[8]={'0','0','0','0','0','0','0','0'}; 
+    datos.append(bits);
+
+    datos.preppend(divisor);
+
     // TODO: Esta función se debe realizar completamente. LEA BIEN LA GUÃA Y LA DOCUMENTACIÓN.
 }
 
