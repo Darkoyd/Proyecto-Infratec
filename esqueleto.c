@@ -57,7 +57,7 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 
     while(tempDecimal!=0)  
     {  
-        /* Finds decimal%2 and adds to the binary value */  
+        /* %2 con el decimal*/  
         binary[index] = (tempDecimal % 2) + '0';  
 
         tempDecimal /= 2;  
@@ -65,9 +65,10 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
     }  
     binary[index] = '\0';  
 
-    /* Reverse the binary value found */  
+    /* invierte el resultado obtenido (número en binario) */  
     strrev(binary);
-    for(char i = 0; i < lonDiv; i++){
+    for(char i = 0; i < lonDiv; i++)
+    {
 	 divi[i] = binary[i];  
 
 
@@ -105,7 +106,8 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
  * El char con el contenido respectivo de los bits de la entrada de ceros y unos del usuario
  **/
 unsigned char calcularByte(unsigned char *entrada)
-{
+{ 
+
     int tam = strlen(entrada);
 
     char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
