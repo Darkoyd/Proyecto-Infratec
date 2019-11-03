@@ -49,7 +49,7 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
  
     unsigned char tempDecimal;  
     unsigned char binary[8];  
-    unsigned char divi [lonDiv];
+    unsigned char divi [8];
     char index = 0;   
 
     /* Copies decimal value to temp variable */  
@@ -70,7 +70,7 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
     for(char i = 0; i < lonDiv; i++)
     {
 	 divi[i] = binary[i];  
-
+    }
 
     unsigned char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
 
