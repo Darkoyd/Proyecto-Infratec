@@ -1,0 +1,5 @@
+hexadecimal del CRC que se debe obtener al final:
+78
+
+divisor a usar (polinomio generador):
+110101
