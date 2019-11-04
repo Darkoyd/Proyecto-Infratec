@@ -105,10 +105,12 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 unsigned char calcularByte(unsigned char *entrada)
 { 
 
+    /*Se calcula la longitud de la cadena  */
     int tam = strlen(entrada);
-
+    /*//se guarda el tamaño del unsigned char dado por parámetro para saber cuantos ceros se le deben agregar con el fin de completar el byte.*/
     char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
 
+    /* Se agregan los ceros adicionales al unsigned char para tener el dato como un byte*/
     for (char i = 0; i < tam; i++)
     {
         if (entrada[i] == '1')
@@ -117,11 +119,11 @@ unsigned char calcularByte(unsigned char *entrada)
 
     unsigned char byte = 0;
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++) /*//en este for se revisa cada carácter del unsigned char entrada para ir convirtiendo el número de binario a decimal*/
     {
         unsigned char potencia = pow(2, (7 - i));
-        unsigned char bit = (bits[i] - '0') * potencia;
-        byte = byte + bit;
+        unsigned char bit = (bits[i] - '0') * potencia; /*//se saca la potencia de 2 por la que se debe multiplicar el 1 o el 0 del número binario de entrada*/
+        byte = byte + bit; /*se suman los valores de los 1 o 0 multiplicados por las potencias de 2 para obtener el número en decimal*/
     }
 
     return byte;
