@@ -46,53 +46,28 @@ int cargarInfo(Informacion *, char *);
  **/
 void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
 {
- 
-    unsigned char tempDecimal;  
-    unsigned char binary[8];  
-    
-    char index = 0;   
-
-    /* Copies decimal value to temp variable */  
-    tempDecimal = divisor;  
-
-    while(tempDecimal!=0)  
-    {  
-        /* %2 con el decimal*/  
-        binary[index] = (tempDecimal % 2) + '0';  
-
-        tempDecimal /= 2;  
-        index++;  
-    }  
-    binary[index] = '\0';  
-
-    /* invierte el resultado obtenido (número en binario) */  
-    strrev(binary);
-    
-
-    unsigned char bits[8] = {'0', '0', '0', '0', '0', '0', '0', '0'};
-
-    strcat(datos->contenido, bits);
+    unsigned char a = divisor;
+    unsigned char b = 0;
 
     for (int i = 0; i < datos->longitudContenido; i++)
     {
-        if (datos->contenido[i] == '1')
+        unsigned char c = 128;
+        while (a != 0)
         {
-            for (char j = 0; j < lonDiv; j++)
+            if (datos->contenido[i] & c)
             {
-                unsigned char x = datos->contenido[i + j] ^ binary[j];
-                if (x == 1)
-                {
-                    datos->contenido[i + j] = '1';
-                }
-                else
-                {
-                    datos->contenido[i + j] = '0';
-                }
+                datos->contenido[i] = datos->contenido[i] ^ a;
+                datos->contenido[i + 1] = datos->contenido[i + 1] ^ b;
             }
+            char carry = a << 7;
+            b = b >> 1;
+            b = b | carry;
+            a = a >> 1;
+            c = c >> 1;
         }
+        a = b;
+        b = 0;
     }
-
-    
 }
 
 /**
@@ -103,7 +78,7 @@ void calcularCRC(Informacion *datos, int lonDiv, unsigned char divisor)
  * El char con el contenido respectivo de los bits de la entrada de ceros y unos del usuario
  **/
 unsigned char calcularByte(unsigned char *entrada)
-{ 
+{
 
     /*Se calcula la longitud de la cadena  */
     int tam = strlen(entrada);
@@ -123,7 +98,7 @@ unsigned char calcularByte(unsigned char *entrada)
     {
         unsigned char potencia = pow(2, (7 - i));
         unsigned char bit = (bits[i] - '0') * potencia; /*//se saca la potencia de 2 por la que se debe multiplicar el 1 o el 0 del número binario de entrada*/
-        byte = byte + bit; /*se suman los valores de los 1 o 0 multiplicados por las potencias de 2 para obtener el número en decimal*/
+        byte = byte + bit;                              /*se suman los valores de los 1 o 0 multiplicados por las potencias de 2 para obtener el número en decimal*/
     }
 
     return byte;
@@ -221,10 +196,7 @@ int main(int argc, char *argv[])
     // Se calcula el CRC y se muestra en consola
     calcularCRC(info, lonDiv, divisor);
     printf("El CRC calculado en hexa es:\n\n");
-    for (i = 0; i <= info->longitudContenido; i++)
-    {
-        printf("%02x", info->contenido[i]);
-    }
+    printf("%02x", info->contenido[info->longitudContenido]);
     printf("\n\n");
 
     system("pause");
